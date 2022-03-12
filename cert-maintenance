@@ -1,0 +1,36 @@
+#!/bin/bash
+#To use this script certbot needs to be installed.
+
+#Renew cert
+sudo certbot renew --quiet
+
+#Set to your website domain or ip
+WEBSITE=lucasesmith.com
+
+#Set file names
+CA=$WEBSITE.pem
+CERT=$WEBSITE.crt
+KEY=$WEBSITE.key
+
+#File names from "Lets Encrypt"
+CA_FILE_NAME=fullchain.pem
+CERT_FILE_NAME=cert.pem
+KEY_FILE_NAME=privkey.pem
+
+#Distro specifc config may require changes
+LETS_ENCRYPT_FOLDER=/etc/letsencrypt/live/$WEBSITE
+
+#Cert and key destination; make sure this folder exists
+CERT_KEY_LOCATION=/etc/certs/webserver/
+
+#Location of files
+CA_FILE=$LETS_ENCRYPT_FOLDER/$CA_FILE_NAME
+CERT_FILE=$LETS_ENCRYPT_FOLDER/$CERT_FILE_NAME
+KEY_FILE=$LETS_ENCRYPT_FOLDER/$KEY_FILE_NAME
+
+cp $CA_FILE $CERT_KEY_LOCATION
+mv $CERT_KEY_LOCATION/$CA_FILE_NAME $CERT_KEY_LOCATION/$CA
+cp $CERT_FILE $CERT_KEY_LOCATION
+mv $CERT_KEY_LOCATION/$CERT_FILE_NAME $CERT_KEY_LOCATION/$CERT
+cp $KEY_FILE $CERT_KEY_LOCATION
+mv $CERT_KEY_LOCATION/$KEY_FILE_NAME $CERT_KEY_LOCATION/$KEY

@@ -1,0 +1,14 @@
+#!/bin/bash
+# Helper for LetsEncrypt; alternatively you can use a wildcard cert for this
+
+EMAIL=lucas@lucasesmith.com
+DOMAIN=lucasesmith.com
+
+case $1 in
+	-subdomain)
+		certbot certonly --webroot --agree-tos -w $2 --email $EMAIL --expand -d $3.$DOMAIN
+		;;
+	*)
+		echo "Supported commands -subdomain (webroot, subdomain)"
+esac
+
